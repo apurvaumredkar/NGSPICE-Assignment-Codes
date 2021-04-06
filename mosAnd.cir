@@ -1,0 +1,24 @@
+MOSTFET AND GATE
+
+.model mosn nmos
+.model mosp pmos
+
+v1 1 0 pulse(-5v 5v 0 0 0 50ns 100ns)
+v2 2 0 pulse(-5v 5v 0 0 0 100ns 200ns)
+
+vcc 3 0 dc 5v
+
+m1 4 1 3 10 mosp
+m2 4 2 3 10 mosp
+m3 5 1 4 10 mosn
+m4 0 2 5 10 mosn
+m5 6 4 3 10 mosp
+m6 0 4 6 10 mosn
+
+.tran 1ns 500ns
+.control
+run
+plot v(1) v(2)+15 v(6)+30
+set xbrushwidth=4
+.endc
+.end

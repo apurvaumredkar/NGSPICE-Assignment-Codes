@@ -1,0 +1,43 @@
+T FLIP FLOP
+*made using D Flip Flop
+
+.model	mosn	nmos
+.model	mosp	pmos
+
+.subckt dff 	d 	clk	notclk	q 	notq
+Vdd	vdd	0	dc	5v
+m1 	vdd 	d 	s 	vdd 	mosp
+m2 	s 	notclk 	notq 	vdd 	mosp
+m3 	notq 	clk 	s2 	0 	mosn
+m4 	s2 	d 	0 	0 	mosn
+m5 	vdd 	notq 	q 	vdd	mosp
+m6 	q	notq	0	0	mosn
+m7 	vdd 	q 	s4 	vdd	mosp
+m8	s4	clk	notq	vdd	mosp
+m9 	notq 	notclk 	s5 	0 	mosn
+m10 	s5 	q 	0 	0 	mosn
+.ends
+
+.subckt	xor	A	B	OP
+Vdd vdd 0 dc 5v
+m1	vdd 	A 	s 	vdd	mosp
+m2 	s 	A 	0 	0 	mosn
+m3 	A 	B 	OP 	vdd 	mosp
+m4 	OP 	B 	s 	0 	mosn
+.ends
+
+Vt 	t	0	pulse(0 5 0 0 0 100ns 300ns)
+Vclk	clk	0 	pulse(0 5 0 0 0 125ns 250ns)
+Vnclk	notclk 	0 	pulse(5 0 0 0 0 125ns 250ns)
+
+X1	t	q	z1	xor
+X2	z1	clk	notclk	q	notq	dff
+
+.tran	0.5ns	1000ns
+.control
+run
+plot	v(t)	v(clk)+10	v(q)+20	v(notq)+30
+set	xbrushwidth=	4
+.endc
+.end
+

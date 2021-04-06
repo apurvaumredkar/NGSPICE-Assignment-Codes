@@ -1,0 +1,40 @@
+EDGE TRIGGERED D FLIP FLOP
+
+.model	mosp	pmos
+.model 	mosn 	nmos
+
+.subckt	nand 	A 	B 	OP
+Vdd 	1 	0 	dc	5v 
+m1 	1 	A 	OP	1 	mosp
+m2 	1 	B 	OP 	1 	mosp 
+m3 	OP 	A 	3 	0 	mosn
+m4 	3 	B 	0 	0 	mosn
+.ends
+
+.subckt nand3 	A 	B 	C 	OP
+Vdd 	vdd 	0 	dc 	5v
+m1 	vdd 	A 	OP 	vdd 	mosp
+m2 	vdd 	B 	OP 	vdd 	mosp
+m3 	vdd 	C 	OP 	vdd 	mosp 
+m4 	OP 	A 	s1 	0 	mosn
+m5 	s1	B 	s2 	0 	mosn 
+m6 	s2 	C 	0 	0	mosn
+.ends
+
+VD 	d 	0 	pulse(0 5 0 0 0 100ns 300ns)
+Vclk 	clk 	0 	pulse(0 5 0 0 0 125ns 250ns)
+
+X1 	p1 	p4 	p3 	nand
+X2 	p3 	clk 	p1 	nand
+X3 	p1 	clk 	p4 	p2 	nand3
+X4 	p2 	d 	p4 	nand
+X5 	p1	notq	q	nand
+X6 	p2 	q 	notq 	nand
+
+.tran 	10ns 	3000ns
+.control
+run
+plot 	v(d) 	v(clk)+10 	v(q)+20 v(notq)+30
+set 	xbrushwidth=	4
+.endc
+.end

@@ -1,0 +1,24 @@
+XNOR GATE USING CMOS
+
+.model mosn nmos
+.model mosp pmos
+
+Vcc 1 0 dc 5v
+V1 a 0 pulse(-5 5 0 0 0 50ms 100ms)
+V2 b 0 pulse(-5 5 0 0 0 100ms 200ms)
+
+m1 1 a s 10 mosp
+m2 s a 0 0 mosn
+m3 a b s1 10 mosp
+m4 s1 b s 0 mosn
+
+m5 out s1 1 1 mosp
+m6 0 s1 out 0 mosn
+
+.tran 10us 500ms
+.control
+run
+plot v(a) v(b)+15 v(out)+30
+set xbrushwidth = 4
+.endc
+.end

@@ -1,0 +1,28 @@
+AOI22 LOGIC
+
+.model mosn nmos
+.model mosp pmos
+
+Va a 0 pulse(-5 5 0 0 0 50ms 100ms)
+Vb b 0 pulse(-5 5 0 0 0 100ms 200ms)
+Vc c 0 pulse(-5 5 0 0 0 200ms 400ms)
+Vd d 0 pulse(-5 5 0 0 0 400ms 800ms)
+
+Vcc vcc 0 dc 6v
+
+m1 vcc a s vcc mosp
+m2 vcc b s vcc mosp
+m3 s c op vcc mosp
+m4 s d op vcc mosp
+m5 op a s1 0 mosn
+m6 s1 b 0 0 mosn
+m7 op c s1 0 mosn
+m8 s1 d 0 0 mosn
+
+.tran 100us 800ms
+.control
+run
+plot v(a) v(b)+15 v(c)+30 v(d)+45 v(op)+60
+set xbrushwidth=4
+.endc
+.end 

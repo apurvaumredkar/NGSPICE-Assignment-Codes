@@ -1,0 +1,17 @@
+NOT GATE USING MOSFET
+
+.model mosn nmos
+.model mosp pmos
+
+v1 1 0 pulse(0 5 0 0 0 50m 100m)
+vcc 2 0 dc 5
+
+m1 3 1 2 2 mosp
+m2 0 1 3 0 mosn
+
+.tran 10us 500ms
+.control
+run
+plot v(1) v(3)+10
+.endc
+.end

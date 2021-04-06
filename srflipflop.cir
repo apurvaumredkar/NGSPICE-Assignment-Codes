@@ -1,0 +1,33 @@
+SR FLIP FLOP
+
+.model mosn nmos
+.model mosp pmos
+
+Vdd vdd 0 dc 6v
+Vclk clk 0 pulse(-5 5 0 0 0 50ns 100ns)
+
+Vr r 0 pulse(-5 5 0 0 0 100ns 200ns)
+Vs s 0 pulse(-5 5 0 0 0 200ns 400ns)
+
+mp1 vdd r n1 vdd mosp
+mp2 vdd clk n1 vd mosp
+mp3 n1 notq q vdd mosp
+
+mn1 q r n2 0 mosn
+mn2 n2 clk 0 0 mosn
+mn3 q notq 0 0 mosn
+
+mp4 vdd s n3 vdd mosp
+mp5 vdd clk n3 vdd mosp
+mp6 n3 q notq vdd mosp
+
+mn4 notq s n4 0 mosn
+mn5 n4 clk 0 0 mosn
+mn6 notq q 0 0 mosn
+
+.tran 0.1ns 500ns
+.control
+run
+plot v(r) v(s)+15 v(clk)+30 v(q)+45 v(notq)+60
+.endc
+.end

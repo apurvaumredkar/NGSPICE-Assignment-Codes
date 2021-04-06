@@ -1,0 +1,29 @@
+XOR GATE USING NAND GATES
+
+.model mosn nmos
+.model mosp pmos
+
+.subckt nand A B OP
+Vdd 1 0 dc 5v 
+m1 1 A OP 1 mosp
+m2 1 B OP 1 mosp 
+m3 OP A 3 0 mosn
+m4 3 B 0 0 mosn
+.ends
+
+Va 1 0 pulse(-5 5 0 0 0 50ms 100ms)
+Vb 2 0 pulse(-5 5 0 0 0 100ms 200ms)
+
+X1 1 2 z1 nand
+X2 1 z1 z2 nand
+X3 2 z1 z3 nand
+X4 z2 z3 op nand
+
+.tran 10us 500ms
+.control
+run
+plot v(1) v(2)+15 v(op)+30
+set xbrushwidth=4
+.endc
+.end
+

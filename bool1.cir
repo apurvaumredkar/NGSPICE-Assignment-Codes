@@ -1,0 +1,25 @@
+Boolean Expression A+BC
+Va 1 0 PULSE(-5 5 0 0 0 50ns 100ns)
+Vb 2 0 PULSE(-5 5 0 0 0 100ns 200ns)
+Vc 3 0 PULSE(-5 5 0 0 0 200ns 400ns)
+
+R1 4 2 10kOhm
+Q1 5 4 6 mybjt
+R2 7 3 10kOhm
+Q2 6 7 8 mybjt
+R3 8 0 10kOhm
+Vcc 5 0 DC 5V
+
+R4 9 8 10kOhm
+Q3 5 9 10 mybjt
+R5 11 1 10kOhm
+Q4 5 11 10 mybjt
+R6 10 0 10kOhm
+
+.model mybjt npn(Is = 1e-15)
+.tran 0.1NS 1000NS
+.control
+run
+plot v(1) v(2)+15 v(3)+30 v(10)+45
+.endc
+.end

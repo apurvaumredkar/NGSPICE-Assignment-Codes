@@ -1,0 +1,18 @@
+Clipper Circuit
+* Clips voltages above +3V and below -3V
+
+Vin 1 0 SINE(0V 6V 60Hz)
+Rin 1 2 220Ohm
+d1 2 3 mydiode
+V1 3 0 DC 2.3V
+d2 4 2 mydiode
+V2 0 4 DC 2.3V
+
+.model mydiode D (Is=0.1pA Rs=16 CJO=2p Tt=12n Bv=100 Ibv=0.1p)
+.tran 1us 50ms
+.control
+run
+plot v(1) v(2)
+set Xbrushwidth=2
+.endc
+.end

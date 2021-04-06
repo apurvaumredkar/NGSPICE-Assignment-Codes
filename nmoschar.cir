@@ -1,0 +1,20 @@
+MOSFET CHARACTERISTICS
+
+.model mosn nmos
+
+m1 1 2 0 0 mosn
+r1 2 3 1k
+r2 1 4 1k
+vgs 3 0 1v
+vds 4 0 1v
+
+.control
+run
+dc vds 0 5 0.01
+plot -i(vds)
+dc vgs 0 5 0.01
+plot -i(vds)
+set xbrushwidth=4
+.endc
+.end
+ 

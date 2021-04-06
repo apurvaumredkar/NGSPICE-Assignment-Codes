@@ -1,0 +1,23 @@
+COMMON DRAIN JFET AMPLIFIER
+
+.model myjfet NJF()
+
+*Vin 10 0 dc=0 ac=1
+Vin 10 0 dc=0 sine(0 1 60)
+Vdd 1 0 dc 12v
+J1 1 2 3 myjfet 
+C1 10 2 10uF
+Rg 10 0 10kOhm
+Rs 3 0 10kOhm
+C2 3 4 10uF
+Rload 4 0 10kOhm
+
+.tran 10us 100ms
+*.ac dec 100 1 10Gig
+.control
+run
+plot v(10) v(4)
+*plot vdb(4)
+set xbrushwidth = 4
+.endc
+.end

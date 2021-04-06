@@ -1,0 +1,12 @@
+rl circuit
+v 1 0 5v
+r 1 2 500
+l 2 0 10mh
+.dc v 0 5 0.5
+.control
+run
+plot v(1)
+plot v(2)
+plot v(1)/500
+.endc
+.end

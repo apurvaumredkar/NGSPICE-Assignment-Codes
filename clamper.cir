@@ -1,0 +1,18 @@
+Clamper Circuit
+*20v peak to peak, clamp to -9v to 11v
+* i.e. Positive Clamper with negative bias
+
+Vin 1 0 SINE(0V 10V 60Hz)
+C 1 2 300uF
+D1 3 2 mydiode
+V1 0 3 DC 8.3V
+R 2 0 10kOhm
+
+.model mydiode D (Is=0.1pA Rs=16 CJO=2p Tt=12n Bv=100 Ibv=0.1p)
+.tran 10us 250ms
+.control
+run
+plot v(1) v(2)
+set Xbrushwidth=2
+.endc
+.end

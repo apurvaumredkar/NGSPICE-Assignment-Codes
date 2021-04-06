@@ -1,0 +1,20 @@
+P-MOSFET DRAIN AND TRANSFER CHARACTERISTICS
+.model mosp pmos
+m1 d g 0 0 mosp
+r1 d 4 1k
+vds 4 0 -5V
+r2 g 5 1k 
+vgs 5 0 -2V
+
+*.dc vgs -5 1 0.01
+.dc vds -5 1 0.01
+.control
+run
+.option savecurrents
+.save @r1[i]
+plot @r1[i]
+set xbrushwidth=4
+.endc
+.end
+
+

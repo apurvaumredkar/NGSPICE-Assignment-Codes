@@ -1,0 +1,40 @@
+3 INPUT MAJORITY GATE USING NAND GATE
+
+.model mosp pmos
+.model mosn nmos
+
+.subckt nand A B OP
+Vdd 1 0 dc 5v 
+m1 1 A OP 1 mosp
+m2 1 B OP 1 mosp 
+m3 OP A 3 0 mosn
+m4 3 B 0 0 mosn
+.ends
+
+Va 1 0 pulse(-5 5 0 0 0 50ms 100ms)
+Vb 2 0 pulse(-5 5 0 0 0 100ms 200ms)
+Vc 3 0 pulse(-5 5 0 0 0 200ms 400ms)
+
+*A NAND B
+X1 1 2 z1 nand
+
+*AB
+X2 z1 z1 z2 nand
+
+*A xor B
+X3 z1 1 z3 nand
+X4 z1 2 z4 nand
+X5 z3 z4 z5 nand
+
+*(A xor B) NAND C
+X6 z5 3 z6 nand
+
+X7 z1 z6 op nand
+
+.tran 100us 500ms
+.control
+run
+plot v(1) v(2)+15 v(3)+30 v(op)+45
+set xbrushwidth=4
+.endc
+.end

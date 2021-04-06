@@ -1,0 +1,23 @@
+COMMON GATE AMPLIFIER USING MOSFET
+
+vdd d 0 0.5
+*v1 1 0 sin(0 5 100)
+v1 1 0 dc=0 ac=5
+c1 1 s 100
+.model mosn nmos
+
+m1 d1 0 s s mosn
+r1 d d1 50k
+rs s 0 50k
+c2 d1 vo 100
+rl vo 0 50k
+*.tran 10us 50ms
+.ac dec 100 1 10Meg
+.control
+run 
+*plot v(1) v(vo)
+plot db(v(vo)) 
+.endc
+.end
+
+

@@ -1,0 +1,28 @@
+hartley's oscillator
+
+.model mybjt npn (is=1e-15)
+
+Q1 1 2 3 mybjt 
+c1 1 6 0.1u
+c4 6 7 0.01u
+l1 6 0 12.66m
+l2 0 7 12.66m
+
+r4 3 0 4.8k
+c3 3 0 0.1u
+
+vc 5 0 12
+r3 5 1 1.2k
+
+r1 5 2 380k
+r2 2 0 72k
+c2 2 7 0.1u
+
+.tran 1us 5ms
+
+.control
+run
+plot v(2)
+set xbrushwidth = 2
+.endc
+.end

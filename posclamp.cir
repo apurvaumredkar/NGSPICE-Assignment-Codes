@@ -1,0 +1,15 @@
+POSITIVE CLAMPER CIRCUIT
+
+Vin 0 1 SIN(0V 9V 60Hz)
+C1 1 2 250uF
+D1 0 2 D1N4148
+Rload 0 2 10kOhm
+
+.model D1N4148 D (Is=0.1pA Rs=16 CJO=2p Tt=12n Bv=100 Ibv=0.1p)
+.tran 10us 100ms
+
+.control
+run
+plot v(1) v(2)
+.endc
+.end

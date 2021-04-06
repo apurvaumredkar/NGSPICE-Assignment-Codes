@@ -1,0 +1,22 @@
+TTL OR GATE
+
+V1 1 0 PULSE(-5 5 0 0 0 50NS 100NS)
+V2 2 0 PULSE(-5 5 0 0 0 100NS 200NS)
+
+R1 3 1 1kOhm
+R2 4 2 1kOhm
+
+Vcc 5 0 DC 6V
+Q1 5 3 6 mybjt
+Q2 5 4 6 mybjt
+
+Rl 6 0 10kOhm
+.model mybjt npn(Is = 1e-15)
+.tran 0.1NS 1000NS
+
+.control
+run
+plot v(1) v(2)+15 v(6)+30
+set Xbrushwidth=3
+.endc
+.end

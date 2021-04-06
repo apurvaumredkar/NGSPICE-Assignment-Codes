@@ -1,0 +1,22 @@
+OP AMP DIFFERENTIATOR - SINE INPUT
+
+vin 10 0 sine(0v 6v 1kHz)
+
+.INCLUDE LF356.MOD
+XU1 3 2 7 4 6 LF356/NS
+
+r1 10 11 1kohm
+c1 11 2 10nf
+rf 2 6 10kohm
+cf 2 6 1nf
+r2 3 0 0
+vcc 7 0 12v
+vdd 4 0 -12v
+
+.tran 1us 5ms
+.control
+run
+plot v(10) v(6)
+set xbrushwidth=4
+.endc
+.end

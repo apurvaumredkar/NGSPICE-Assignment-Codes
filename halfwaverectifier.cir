@@ -1,0 +1,14 @@
+half wave rectifier
+vin 0 1 sine(0 5 60 0 0 0)
+d1 1 2 D1N4148
+r1 2 0 2k
+.model D1N4148 D (Is=0.1pA Rs=16 CJO=2p Tt=12n Bv=100 Ibv=0.1p)
+.tran 1u 40m
+.control
+run
+set color0 = white
+set color1 = black
+plot v(1)
+plot v(2)
+.endc
+.end

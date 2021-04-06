@@ -1,0 +1,23 @@
+FULL WAVE RECTIFIER WITH RESISTIVE LOAD
+d1 0 1 D1N4148
+d2 1 2 D1N4148
+d3 0 3 D1N4148
+d4 3 2 D1N4148
+
+Vin 3 1 SIN(0V 9V 60Hz)
+Rload 2 0 1kOhm
+
+.model D1N4148 D (Is=0.1pA Rs=16 CJO=2p Tt=12n Bv=100 Ibv=0.1p)
+.tran 10us 100ms
+
+.control
+run
+plot v(3,1) v(2) title 'Input and Output Voltage Waveform'
+
+.option savecurrents
+.save @Rload[i]
+
+plot @Rload[i] title 'Output Current'
+
+.endc
+.end

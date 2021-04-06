@@ -1,0 +1,19 @@
+Voltage Tripler
+
+Vin 1 0 SINE(0V 10V 60Hz)
+C1 1 2 100pF
+D1 2 0 mydiode
+C2 0 3 100pF
+D2 3 2 mydiode
+C3 2 4 100pF
+D3 4 3 mydiode
+
+.model mydiode D (Is=0.1pA Rs=16 CJO=2p Tt=12n Bv=100 Ibv=0.1p)
+.tran 10us 600ms
+
+.control
+run
+plot v(1) v(1,4)
+set Xbrushwidth=2
+.endc
+.end

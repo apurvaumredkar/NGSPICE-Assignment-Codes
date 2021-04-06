@@ -1,0 +1,32 @@
+D FLIP FLIP
+
+.model mosn nmos
+.model mosp pmos
+
+Vdd vdd 0 dc 5v
+
+V1 clk 0 pulse(0 5 0 0 0 125ns 250ns)
+v2 notclk 0 pulse(5 0 0 0 0 125ns 250ns)
+
+V3 d 0 pulse(0 5 0 0 0 100ns 300ns)
+
+m1 vdd d s vdd mosp
+m2 s notclk s1 vdd mosp
+m3 s1 clk s2 0 mosn
+m4 s2 d 0 0 mosn
+
+m5 vdd s1 s3 vdd mosp
+m6 s3 s1 0 0 mosn
+
+m7 vdd s3 s4 vdd mosp
+m8 s4 clk s1 vdd mosp
+m9 s1 notclk s5 0 mosn
+m10 s5 s3 0 0 mosn
+
+.tran 1ns 800ns
+.control
+run
+plot v(d) v(clk)+10 v(s3)+20 v(s1)+30
+set xbrushwidth=4
+.endc
+.end 

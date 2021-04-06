@@ -1,0 +1,73 @@
+4 BIT FULL ADDER
+
+.model mosn nmos
+.model mosp pmos
+
+.subckt and a b z
+Vcc vcc 0 dc 6v
+m1 4 a vcc vcc mosp
+m2 4 b vcc vcc mosp
+m3 5 a 4  0 mosn
+m4 0 b 5 0 mosn
+m5 z 4 vcc vcc mosp
+m6 0 4 z 0 mosn
+.ends
+
+.subckt xor a b z
+Vcc vcc 0 dc 6v
+m1 vcc a s vcc mosp
+m2 s a 0 0 mosn
+m3 a b z vcc mosp
+m4 z b s 0 mosn
+.ends
+
+.subckt or a b z
+Vcc vcc 0 dc 6v
+m1 vcc a s vcc mosp
+m2 s b s1 vcc mosp
+m3 s1 a 0 0 mosn
+m4 s1 b 0 0 mosn
+m5 vcc s1 z vcc mosp
+m6 z s1 0 0 mosn
+.ends
+
+.subckt fulladd a b cin sum cout
+X1 a b z xor
+X2 z cin sum xor
+X3 a b z1 and
+X4 a cin z2 and
+X5 b cin z3 and
+X6 z1 z2 z4 or
+X7 z3 z4 cout or
+.ends
+
+*A 1101
+Va0 1 0 dc 5
+Va1 2 0 dc 0
+Va2 3 0 dc 5
+Va3 4 0 dc 5
+
+*B 1100
+Vb0 5 0 dc 0
+Vb1 6 0 dc 0
+Vb2 7 0 dc 5
+Vb3 8 0 dc 5
+
+*Cin 1
+Vcin cin 0 dc 5
+
+X1 1 5 cin s0 c0 fulladd
+X2 2 6 c0 s1 c1 fulladd
+X3 3 7 c1 s2 c2 fulladd
+X4 4 8 c2 s3 cout fulladd
+
+.tran 100us 100ms
+.control
+run
+plot v(1) v(5)+15 v(cin)+30 v(s0)+45 v(c0)+60  ylimit 0 80 title "A0, B0, Cin, S0, C0"
+plot v(2) v(6)+15 v(c0)+30 v(s1)+45 v(c1)+60  ylimit 0 80 title "A1, B1, C0, S1, C1"
+plot v(3) v(7)+15 v(c1)+30 v(s2)+45 v(c2)+60  ylimit 0 80 title "A2, B2, C1, S2, C2"
+plot v(4) v(8)+15 v(c2)+30 v(s3)+45 v(cout)+60  ylimit 0 80 title "A3, B3, C2, S3, Cout"
+set xbrushwidth=4
+.endc
+.end

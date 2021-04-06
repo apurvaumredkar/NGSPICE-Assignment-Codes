@@ -1,0 +1,16 @@
+AND GATE USING DIODE
+
+V1 1 0 PULSE(-1 1 0NS 2NS 2NS 50NS 100NS)
+V2 2 0  PULSE(-1 1 0NS 2NS 2NS 100NS 200NS)
+D1 3 1 diode
+D2 3 2 diode 
+Vdc 4 0 5V
+Ri 3 2 100Ohm
+.model diode D (Is=0.1pA Rs=16 CJO=2p Tt=12n Bv=100 Ibv=0.1p)
+.tran 10Ns 500Ns
+
+.control
+run 
+plot v(1) v(2)+5 v(3)+10
+.endc
+.end

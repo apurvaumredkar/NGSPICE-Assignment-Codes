@@ -1,0 +1,43 @@
+HALF SUBTRACTOR
+
+.model mosn nmos
+.model mosp pmos
+
+Va a 0 pulse(5 -5 0 0 0 50ms 100ms)
+Vb b 0 pulse(5 -5 0 0 0 100ms 200ms)
+
+.subckt xor a b z
+vcc vcc 0 dc 5v
+m1 vcc a s vcc mosp
+m2 s a 0 0 mosn
+m3 a b z vcc mosp
+m4 z b s 0 mosn
+.ends
+
+.subckt and a b z
+vcc vcc 0 dc 5v
+m1 4 a vcc vcc mosp
+m2 4 b vcc vcc mosp
+m3 5 a 4 0 mosn
+m4 0 b 5 0 mosn
+m5 z 4 vcc vcc mosp
+m6 0 4 z 0 mosn
+.ends
+
+.subckt not a nota
+vcc vcc 0 dc 5
+m1 vcc a nota vcc mosp
+m2 nota a 0 0 mosn
+.ends
+
+X1 a b diff xor
+X2 a nota not
+X3 nota b borr and
+
+.tran 100us 300ms
+.control
+run
+plot v(a) v(b)+15 v(diff)+30 v(borr)+45
+set xbrushwidth=4
+.endc
+.end

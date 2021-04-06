@@ -1,0 +1,13 @@
+POSITIVE CLIPPER CIRCUIT
+
+Vin 0 1 SIN(0V 12V 60Hz)
+d1 2 1 D1N4148
+Rload 2 0 300Ohm
+
+.model D1N4148 D (Is=0.1pA Rs=16 CJO=2p Tt=12n Bv=100 Ibv=0.1p)
+.tran 10us 100ms
+.control
+run
+plot v(1) v(2)
+.endc
+.end
