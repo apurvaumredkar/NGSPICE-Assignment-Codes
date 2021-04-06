@@ -1,5 +1,5 @@
 3 INPUT AND GATE USING NAND GATE
-*sup bro, just checking
+
 .model mosp pmos
 .model mosn nmos
 
